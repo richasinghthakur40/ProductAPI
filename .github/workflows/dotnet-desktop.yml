@@ -22,7 +22,8 @@ jobs:
       run: dotnet build --configuration Release
 
     - name: Test
-      run: dotnet test --configuration Release --no-restore
+      run: |
+        dotnet test --configuration Release --no-restore --verbosity normal
 
   deploy:
     needs: build
