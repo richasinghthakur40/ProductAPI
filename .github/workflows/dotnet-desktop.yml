@@ -1,12 +1,9 @@
-name: ASP.NET Core CI
+name: ASP.NET Core CI/CD
 
 on:
   push:
     branches:
-      - master
-  pull_request:
-    branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -27,9 +24,22 @@ jobs:
     - name: Test
       run: dotnet test --configuration Release --no-restore
 
-    - name: Publish artifacts
-      uses: actions/upload-artifact@v2
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v2
       with:
-        name: publish
-        path: |
-          ./YourProject/bin/Release/netcoreapp6.0/
+        dotnet-version: 6.0.100
+
+    - name: Deploy
+      run: |
+        # Add your deployment steps here
+        # For example, deploy to a server, a container, or a cloud platform
+
+# Add more jobs or steps as needed for your specific deployment process
